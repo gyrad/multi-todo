@@ -1,0 +1,53 @@
+.List .panel-tabs button {
+  border-width: 0;
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: -1px;
+  padding: 0.5em;
+  cursor: pointer;
+  outline: none;
+  color: #888;
+}
+
+.List .panel-tabs button.is-active {
+  border-bottom-color: dodgerblue;
+  color: dodgerblue;
+}
+
+.List .list-msg {
+  font-size: 1rem;
+  text-align: center;
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+  padding: 3rem 0;
+  color: #888;
+}
+
+.List .progressbar-wrapper {
+  background-color: #eee;
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+}
+.List .progressbar-wrapper .progressbar {
+  background-color: lime;
+  height: 3px;
+  transition: width 0.7s ease-in-out, background-color 0.7s ease-in-out;
+}
+
+.List .panel-heading {
+  display: flex;
+  align-items: center;
+}
+.List span.list-title {
+  outline: none;
+  display: block;
+  flex: 1;
+}
+.List .list-title:focus {
+  background-color: rgb(255, 255, 100);
+}
+.List .action-btns {
+  float: right;
+}
+/* .List .action-btns button {
+  padding: 4px 7px;
+} */
