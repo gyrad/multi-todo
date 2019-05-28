@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Consumer } from '../../context';
 
+import './ListItem.scss';
+
 class ListItem extends Component {
   toggleCompleted = (dispatch, listId, itemId) => {
     dispatch({ type: 'TOGGLE_COMPLETED', payload: { listId, itemId } });
@@ -14,7 +16,9 @@ class ListItem extends Component {
           const { dispatch } = value;
           return (
             <label
-              className={`panel-block ${item.completed ? 'is-active' : null}`}
+              className={`ListItem panel-block ${
+                item.completed ? 'is-active' : null
+              }`}
               key={item.id}
             >
               <input
@@ -29,6 +33,18 @@ class ListItem extends Component {
               >
                 {item.todoItem}
               </span>
+              <button
+                className="delete-btn"
+                title="Delete Item"
+                onClick={() =>
+                  dispatch({
+                    type: 'DELETE_ITEM',
+                    payload: { listId, itemId: item.id }
+                  })
+                }
+              >
+                <i className="fas fa-minus-circle" />
+              </button>
             </label>
           );
         }}

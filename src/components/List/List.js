@@ -72,6 +72,7 @@ class List extends Component {
                       onClick={() =>
                         dispatch({ type: 'DELETE_LIST', payload: id })
                       }
+                      title="Delete List"
                     >
                       <span className="icon is-small">
                         <i className="fas fa-trash" />

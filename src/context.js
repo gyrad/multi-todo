@@ -42,6 +42,20 @@ const reducer = (state, action) => {
         ]
       };
       return addedState;
+    case 'DELETE_ITEM':
+      const deletedItemState = {
+        allLists: [
+          ...state.allLists.map(list => {
+            if (list.id === action.payload.listId) {
+              list.items = list.items.filter(
+                item => item.id !== action.payload.itemId
+              );
+            }
+            return list;
+          })
+        ]
+      };
+      return deletedItemState;
     case 'SHOW_ACTIVE':
       const showActive = {
         allLists: [
