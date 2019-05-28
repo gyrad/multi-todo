@@ -6,6 +6,7 @@
   cursor: pointer;
   outline: none;
   color: #888;
+  background-color: transparent;
 }
 
 .List .panel-tabs button.is-active {

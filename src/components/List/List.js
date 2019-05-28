@@ -32,7 +32,7 @@ class List extends Component {
     if (filteredList.length === 0 && items.length !== 0) {
       message = (
         <p className="list-msg">
-          There are no {visibility} items.
+          There are no {visibility} items in your list.
           <br />
           {visibility === 'active'
             ? `Woohoo, you’ve completed all your tasks! 🥳`
@@ -49,7 +49,7 @@ class List extends Component {
         {value => {
           const { dispatch } = value;
           return (
-            <div className="column List">
+            <div className="column is-one-third List">
               <div className="panel">
                 <p className="panel-heading">
                   <span
@@ -67,7 +67,12 @@ class List extends Component {
                     {title}
                   </span>
                   <span className="action-btns">
-                    <button className="button is-small is-danger">
+                    <button
+                      className="button is-small is-danger"
+                      onClick={() =>
+                        dispatch({ type: 'DELETE_LIST', payload: id })
+                      }
+                    >
                       <span className="icon is-small">
                         <i className="fas fa-trash" />
                       </span>

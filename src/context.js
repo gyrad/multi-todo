@@ -3,6 +3,8 @@ import uuid from 'uuid';
 
 const Context = React.createContext();
 
+const defaultVisibility = 'all';
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'TOGGLE_COMPLETED':
@@ -88,6 +90,24 @@ const reducer = (state, action) => {
         ]
       };
       return updatedListTitle;
+    case 'DELETE_LIST':
+      const deletedListState = {
+        allLists: [...state.allLists.filter(list => list.id !== action.payload)]
+      };
+      return deletedListState;
+    case 'ADD_LIST':
+      const addedListState = {
+        allLists: [
+          {
+            id: uuid(),
+            title: 'Click me to edit title',
+            visibility: defaultVisibility,
+            items: []
+          },
+          ...state.allLists
+        ]
+      };
+      return addedListState;
     default:
       return state;
   }
@@ -99,7 +119,7 @@ export class Provider extends Component {
       {
         id: uuid(),
         title: 'My Personal List',
-        visibility: 'active',
+        visibility: defaultVisibility,
         items: [
           {
             id: uuid(),
@@ -121,7 +141,47 @@ export class Provider extends Component {
       {
         id: uuid(),
         title: 'My Work List',
-        visibility: 'active',
+        visibility: defaultVisibility,
+        items: [
+          {
+            id: uuid(),
+            todoItem: 'Fill up list 2',
+            completed: true
+          },
+          {
+            id: uuid(),
+            todoItem: 'This is a list 2 item',
+            completed: false
+          }
+        ]
+      },
+      {
+        id: uuid(),
+        title: 'My Work List',
+        visibility: defaultVisibility,
+        items: [
+          {
+            id: uuid(),
+            todoItem: 'Fill up list 2',
+            completed: true
+          },
+          {
+            id: uuid(),
+            todoItem: 'This is a list 2 item',
+            completed: false
+          }
+        ]
+      },
+      {
+        id: uuid(),
+        title: 'My Work List',
+        visibility: defaultVisibility,
+        items: []
+      },
+      {
+        id: uuid(),
+        title: 'My Work List',
+        visibility: defaultVisibility,
         items: [
           {
             id: uuid(),

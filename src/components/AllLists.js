@@ -10,7 +10,7 @@ function AllLists() {
         return (
           <section className="section" style={{ paddingTop: '.5rem' }}>
             <div className="container">
-              <div className="columns">
+              <div className="columns is-multiline">
                 {allLists.map(list => (
                   <List
                     key={list.id}
