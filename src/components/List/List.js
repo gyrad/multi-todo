@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import ListItem from './ListItem';
 import AddItem from './AddItem';
 import { Consumer } from '../../context';
-import './List.css';
+import './List.scss';
 
 class List extends Component {
   updateTitle = (listId, dispatch, e) => {
+    // Following line prevents running dispatch twice.
+    // ISSUE:
+    // [Enter] key blurs element which causes onBlur attribute to fire again.
+    if (e.bubbles) return;
+
     dispatch({
       type: 'UPDATE_LIST_TITLE',
       payload: { listId, newTitle: e.target.textContent }
@@ -63,21 +68,22 @@ class List extends Component {
                       }
                     }}
                     suppressContentEditableWarning={true}
+                    spellCheck={false}
                   >
                     {title}
                   </span>
                   <span className="action-btns">
                     <button
-                      className="button is-small is-danger"
+                      className="delete-list-btn"
                       onClick={() =>
                         dispatch({ type: 'DELETE_LIST', payload: id })
                       }
                       title="Delete List"
                     >
-                      <span className="icon is-small">
-                        <i className="fas fa-trash" />
+                      <span className="icon">
+                        <i className="fas fa-times" />
                       </span>
-                      <span>Delete</span>
+                      {/* <span>Delete</span> */}
                     </button>
                   </span>
                 </p>

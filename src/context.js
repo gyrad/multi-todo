@@ -122,6 +122,23 @@ const reducer = (state, action) => {
         ]
       };
       return addedListState;
+    case 'UPDATE_LIST_ITEM':
+      const updatedListItemState = {
+        allLists: [
+          ...state.allLists.map(list => {
+            if (list.id === action.payload.listId) {
+              list.items = list.items.map(item => {
+                if (item.id === action.payload.itemId) {
+                  item.todoItem = action.payload.newItem;
+                }
+                return item;
+              });
+            }
+            return list;
+          })
+        ]
+      };
+      return updatedListItemState;
     default:
       return state;
   }
@@ -129,89 +146,23 @@ const reducer = (state, action) => {
 
 export class Provider extends Component {
   state = {
-    allLists: [
-      {
-        id: uuid(),
-        title: 'My Personal List',
-        visibility: defaultVisibility,
-        items: [
-          {
-            id: uuid(),
-            todoItem: 'Make breakfast at 7am',
-            completed: false
-          },
-          {
-            id: uuid(),
-            todoItem: 'Learn Reactjs and Redux',
-            completed: false
-          },
-          {
-            id: uuid(),
-            todoItem: 'Run a mile this evening',
-            completed: true
-          }
-        ]
-      },
-      {
-        id: uuid(),
-        title: 'My Work List',
-        visibility: defaultVisibility,
-        items: [
-          {
-            id: uuid(),
-            todoItem: 'Fill up list 2',
-            completed: true
-          },
-          {
-            id: uuid(),
-            todoItem: 'This is a list 2 item',
-            completed: false
-          }
-        ]
-      },
-      {
-        id: uuid(),
-        title: 'My Work List',
-        visibility: defaultVisibility,
-        items: [
-          {
-            id: uuid(),
-            todoItem: 'Fill up list 2',
-            completed: true
-          },
-          {
-            id: uuid(),
-            todoItem: 'This is a list 2 item',
-            completed: false
-          }
-        ]
-      },
-      {
-        id: uuid(),
-        title: 'My Work List',
-        visibility: defaultVisibility,
-        items: []
-      },
-      {
-        id: uuid(),
-        title: 'My Work List',
-        visibility: defaultVisibility,
-        items: [
-          {
-            id: uuid(),
-            todoItem: 'Fill up list 2',
-            completed: true
-          },
-          {
-            id: uuid(),
-            todoItem: 'This is a list 2 item',
-            completed: false
-          }
-        ]
-      }
-    ],
+    allLists: [],
     dispatch: action => this.setState(state => reducer(state, action))
   };
+
+  componentDidMount() {
+    const savedState = JSON.parse(localStorage.getItem('storedState'));
+
+    if (savedState) {
+      this.setState({
+        allLists: savedState
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('storedState', JSON.stringify(this.state.allLists));
+  }
 
   render() {
     return (
