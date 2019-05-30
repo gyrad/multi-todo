@@ -1,0 +1,33 @@
+.App {
+  .shameless-plug {
+    font-size: 0.8rem;
+    position: fixed;
+    bottom: 1rem;
+    right: 2px;
+    transform: rotate(90deg);
+    transform-origin: top right;
+
+    i {
+      color: tomato;
+      animation-name: heart;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+  }
+}
+
+@keyframes heart {
+  0% {
+    color: tomato;
+  }
+  35% {
+    color: #23d160;
+  }
+  50% {
+    color: dodgerblue;
+  }
+  100% {
+    color: tomato;
+  }
+}
