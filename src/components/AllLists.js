@@ -4,9 +4,11 @@ import List from './List/List';
 
 function AllLists() {
   const renderEmptyTodoMessage = (
-    <div className="container has-text-centered">
-      You currently have no lists. Today is a great day to start a new todo
-      list!
+    <div className="section">
+      <div className="container has-text-centered">
+        You currently have no lists. Today is a great day to start a new todo
+        list!
+      </div>
     </div>
   );
 
