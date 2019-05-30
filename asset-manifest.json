@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/multi-todo/static/css/main.dea700f9.chunk.css",
+    "main.js": "/multi-todo/static/js/main.6877a6bf.chunk.js",
+    "main.js.map": "/multi-todo/static/js/main.6877a6bf.chunk.js.map",
+    "runtime~main.js": "/multi-todo/static/js/runtime~main.d37eec7a.js",
+    "runtime~main.js.map": "/multi-todo/static/js/runtime~main.d37eec7a.js.map",
+    "static/css/2.62908225.chunk.css": "/multi-todo/static/css/2.62908225.chunk.css",
+    "static/js/2.54c894eb.chunk.js": "/multi-todo/static/js/2.54c894eb.chunk.js",
+    "static/js/2.54c894eb.chunk.js.map": "/multi-todo/static/js/2.54c894eb.chunk.js.map",
+    "index.html": "/multi-todo/index.html",
+    "precache-manifest.c668415f73cb76594622fe16ed72f53e.js": "/multi-todo/precache-manifest.c668415f73cb76594622fe16ed72f53e.js",
+    "service-worker.js": "/multi-todo/service-worker.js",
+    "static/css/2.62908225.chunk.css.map": "/multi-todo/static/css/2.62908225.chunk.css.map",
+    "static/css/main.dea700f9.chunk.css.map": "/multi-todo/static/css/main.dea700f9.chunk.css.map"
+  }
+}
