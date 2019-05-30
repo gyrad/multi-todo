@@ -139,6 +139,8 @@ const reducer = (state, action) => {
         ]
       };
       return updatedListItemState;
+    case 'DELETE_ALL_LISTS':
+      return { allLists: [] };
     default:
       return state;
   }

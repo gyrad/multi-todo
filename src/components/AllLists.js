@@ -3,24 +3,34 @@ import { Consumer } from '../context';
 import List from './List/List';
 
 function AllLists() {
+  const renderEmptyTodoMessage = (
+    <div className="container has-text-centered">
+      You currently have no lists. Today is a great day to start a new todo
+      list!
+    </div>
+  );
+
   return (
     <Consumer>
       {value => {
         const { allLists } = value;
         return (
-          <section className="section" style={{ paddingTop: '.5rem' }}>
-            <div className="container">
-              <div className="columns is-multiline">
-                {allLists.map(list => (
-                  <List
-                    key={list.id}
-                    list={list}
-                    visibility={list.visibility}
-                  />
-                ))}
+          <React.Fragment>
+            <section className="section" style={{ paddingTop: '.5rem' }}>
+              <div className="container">
+                <div className="columns is-multiline">
+                  {allLists.map(list => (
+                    <List
+                      key={list.id}
+                      list={list}
+                      visibility={list.visibility}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+            {allLists.length === 0 ? renderEmptyTodoMessage : null}
+          </React.Fragment>
         );
       }}
     </Consumer>
