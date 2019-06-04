@@ -50,6 +50,7 @@ class ListItem extends Component {
       'Dec'
     ];
     const datified = new Date(item.dueDate);
+    const today = new Date();
     const dueDate = (() => {
       if (item.dueDate) {
         return `${
@@ -60,21 +61,32 @@ class ListItem extends Component {
     })();
 
     const renderDueDate = (() => {
-      if (dueDate && datified >= new Date()) {
-        return (
-          <div className="duedate">
-            <strong>Due on: </strong> {dueDate}
-          </div>
-        );
-      } else if (
+      if (
         dueDate &&
-        datified.getFullYear() === new Date().getFullYear() &&
-        datified.getMonth() === new Date().getMonth() &&
-        datified.getDate() === new Date().getDate()
+        datified.getFullYear() === today.getFullYear() &&
+        datified.getMonth() === today.getMonth() &&
+        datified.getDate() === today.getDate()
       ) {
         return (
           <div className="duedate">
             <strong style={{ color: 'dodgerblue' }}>Due today! </strong>
+          </div>
+        );
+      } else if (
+        dueDate &&
+        datified.getFullYear() === today.getFullYear() &&
+        datified.getMonth() === today.getMonth() &&
+        datified.getDate() === today.getDate() + 1
+      ) {
+        return (
+          <div className="duedate">
+            <strong style={{ color: 'dodgerblue' }}>Due tomorrow! </strong>
+          </div>
+        );
+      } else if (dueDate && datified >= today) {
+        return (
+          <div className="duedate">
+            <strong>Due on: </strong> {dueDate}
           </div>
         );
       } else {
