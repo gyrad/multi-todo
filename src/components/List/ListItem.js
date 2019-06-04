@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { Consumer } from '../../context';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
+import { Consumer } from '../../context';
+import DueDateButton from './DueDateButton';
 import './ListItem.scss';
 
 class ListItem extends Component {
+  onDueDateSelect = (dispatch, listId, itemId, dueDate) => {
+    dispatch({ type: 'SET_DUE_DATE', payload: { listId, itemId, dueDate } });
+  };
+
   toggleCompleted = (dispatch, listId, itemId) => {
     dispatch({ type: 'TOGGLE_COMPLETED', payload: { listId, itemId } });
+  };
+
+  datepicker = React.createRef();
+
+  closeCalendar = () => {
+    this.datepicker.current.setOpen(false);
   };
 
   updateListItem = (dispatch, listId, itemId, e) => {
@@ -22,6 +35,57 @@ class ListItem extends Component {
 
   render() {
     const { listId, item } = this.props;
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    const datified = new Date(item.dueDate);
+    const dueDate = (() => {
+      if (item.dueDate) {
+        return `${
+          months[datified.getMonth()]
+        } ${datified.getDate()}, ${datified.getFullYear()}`;
+      }
+      return null;
+    })();
+
+    const renderDueDate = (() => {
+      if (dueDate && datified >= new Date()) {
+        return (
+          <div className="duedate">
+            <strong>Due on: </strong> {dueDate}
+          </div>
+        );
+      } else if (
+        dueDate &&
+        datified.getFullYear() === new Date().getFullYear() &&
+        datified.getMonth() === new Date().getMonth() &&
+        datified.getDate() === new Date().getDate()
+      ) {
+        return (
+          <div className="duedate">
+            <strong style={{ color: 'dodgerblue' }}>Due today! </strong>
+          </div>
+        );
+      } else {
+        return (
+          <div className="duedate" style={{ color: 'tomato' }}>
+            <strong style={{ color: 'red' }}>Was due on: </strong> {dueDate}
+          </div>
+        );
+      }
+    })();
+
     return (
       <Consumer>
         {value => {
@@ -57,6 +121,36 @@ class ListItem extends Component {
                 {item.todoItem}
               </span>
               <div className="action-btns">
+                <DatePicker
+                  customInput={<DueDateButton />}
+                  onChange={dueDate =>
+                    this.onDueDateSelect(dispatch, listId, item.id, dueDate)
+                  }
+                  popperClassName="duedate-popup"
+                  popperPlacement="top-end"
+                  popperModifiers={{
+                    offset: {
+                      enabled: true,
+                      offset: '20px, 0px'
+                    }
+                  }}
+                  shouldCloseOnSelect={true}
+                  ref={this.datepicker}
+                  minDate={new Date()}
+                >
+                  <div style={{ clear: 'both', padding: 5 }}>
+                    <button
+                      className="button is-info clear-btn"
+                      onClick={() => {
+                        this.onDueDateSelect(dispatch, listId, item.id, null);
+                        this.closeCalendar();
+                      }}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </DatePicker>
+
                 <button
                   className="delete-btn"
                   title="Delete Item"
@@ -70,6 +164,8 @@ class ListItem extends Component {
                   <i className="fas fa-minus-circle" />
                 </button>
               </div>
+
+              {item.dueDate ? renderDueDate : null}
             </div>
           );
         }}

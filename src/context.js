@@ -141,6 +141,23 @@ const reducer = (state, action) => {
       return updatedListItemState;
     case 'DELETE_ALL_LISTS':
       return { allLists: [] };
+    case 'SET_DUE_DATE':
+      const { dueDate } = action.payload;
+      return {
+        allLists: [
+          ...state.allLists.map(list => {
+            if (list.id === action.payload.listId) {
+              list.items.map(item => {
+                if (item.id === action.payload.itemId) {
+                  item.dueDate = dueDate;
+                }
+                return item;
+              });
+            }
+            return list;
+          })
+        ]
+      };
     default:
       return state;
   }
