@@ -2,7 +2,7 @@
   "name": "multi-todo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://gyrad.github.io/multi-todo",
+  "homepage": "https://tenzinggaychey.com/multi-todo",
   "dependencies": {
     "bulma": "^0.7.5",
     "node-sass": "^4.12.0",
