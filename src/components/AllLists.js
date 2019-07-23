@@ -1,8 +1,10 @@
 import React from 'react';
-import { Consumer } from '../context';
+import { useSelector } from 'react-redux';
 import List from './List/List';
 
-function AllLists() {
+const AllLists = () => {
+  const lists = useSelector(state => state.lists);
+
   const renderEmptyTodoMessage = (
     <div className="section">
       <div className="container has-text-centered">
@@ -13,30 +15,19 @@ function AllLists() {
   );
 
   return (
-    <Consumer>
-      {value => {
-        const { allLists } = value;
-        return (
-          <React.Fragment>
-            <section className="section" style={{ paddingTop: '.5rem' }}>
-              <div className="container">
-                <div className="columns is-multiline">
-                  {allLists.map(list => (
-                    <List
-                      key={list.id}
-                      list={list}
-                      visibility={list.visibility}
-                    />
-                  ))}
-                </div>
-              </div>
-            </section>
-            {allLists.length === 0 ? renderEmptyTodoMessage : null}
-          </React.Fragment>
-        );
-      }}
-    </Consumer>
+    <>
+      <section className="section" style={{ paddingTop: '.5rem' }}>
+        <div className="container">
+          <div className="columns is-multiline">
+            {lists.map(list => (
+              <List key={list.id} list={list} visibility={list.visibility} />
+            ))}
+          </div>
+        </div>
+      </section>
+      {lists.length === 0 ? renderEmptyTodoMessage : null}
+    </>
   );
-}
+};
 
 export default AllLists;

@@ -1,52 +1,38 @@
-import React, { Component } from 'react';
-import { Consumer } from '../../context';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../actions';
 
-class AddItem extends Component {
-  state = {
-    addItem: ''
-  };
+const AddItem = props => {
+  const dispatch = useDispatch();
+  const [newItem, setNewItem] = useState('');
 
-  onAddItem = (addToListId, dispatch, e) => {
+  const onAddItem = (listId, e) => {
     e.preventDefault();
-    dispatch({
-      type: 'ADD_ITEM',
-      payload: {
-        addItem: this.state.addItem,
-        addToListId
-      }
-    });
-    this.setState({ addItem: '' });
+    dispatch(addItem(newItem, listId));
+    setNewItem('');
   };
 
-  render() {
-    return (
-      <Consumer>
-        {value => {
-          const { dispatch } = value;
-          const { addToListId } = this.props;
-          return (
-            <div className="panel-block">
-              <form
-                className="control has-icons-left"
-                onSubmit={e => this.onAddItem(addToListId, dispatch, e)}
-              >
-                <input
-                  type="text"
-                  className="input is-small"
-                  placeholder="Add Item..."
-                  onChange={e => this.setState({ addItem: e.target.value })}
-                  value={this.state.addItem}
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-plus" aria-hidden="true" />
-                </span>
-              </form>
-            </div>
-          );
-        }}
-      </Consumer>
-    );
-  }
-}
+  const { listId } = props;
+
+  return (
+    <div className="panel-block">
+      <form
+        className="control has-icons-left"
+        onSubmit={e => onAddItem(listId, e)}
+      >
+        <input
+          type="text"
+          className="input is-small"
+          placeholder="Add Item..."
+          onChange={e => setNewItem(e.target.value)}
+          value={newItem}
+        />
+        <span className="icon is-small is-left">
+          <i className="fas fa-plus" aria-hidden="true" />
+        </span>
+      </form>
+    </div>
+  );
+};
 
 export default AddItem;
