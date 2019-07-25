@@ -1,4 +1,7 @@
 import {
+  UPDATE_LIST_ITEM_ORDER,
+  UPDATE_LIST_ORDER,
+  LOAD_SAVED_STATE,
   TOGGLE_COMPLETED,
   ADD_ITEM,
   DELETE_ITEM,
@@ -13,6 +16,27 @@ import {
   SET_DUE_DATE
 } from '../actions/types';
 import uuid from 'uuid';
+
+export const updateListItemOrder = (listId, newListItemOrder) => {
+  console.log(newListItemOrder);
+  return {
+    type: UPDATE_LIST_ITEM_ORDER,
+    payload: {
+      listId,
+      newListItemOrder
+    }
+  };
+};
+
+export const updateListOrder = newListOrder => ({
+  type: UPDATE_LIST_ORDER,
+  payload: newListOrder
+});
+
+export const loadSavedState = savedState => ({
+  type: LOAD_SAVED_STATE,
+  payload: savedState
+});
 
 export const toggleCompleted = (listId, itemId) => ({
   type: TOGGLE_COMPLETED,

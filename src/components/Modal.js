@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { useDispatch } from 'react-redux';
 
 const Modal = ({
@@ -12,7 +13,7 @@ const Modal = ({
 }) => {
   const dispatch = useDispatch();
 
-  return (
+  return createPortal(
     <div className={`modal ${visibility ? 'is-active' : ''}`}>
       <div className="modal-background" onClick={closeModal} />
       <div className="modal-card">
@@ -27,7 +28,7 @@ const Modal = ({
           <button
             className={`button ${buttonClass}`}
             onClick={() => {
-              dispatch(buttonAction);
+              dispatch(buttonAction());
               closeModal();
             }}
           >
@@ -38,7 +39,8 @@ const Modal = ({
           </button>
         </footer>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

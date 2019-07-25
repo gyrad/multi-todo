@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Sortable from 'react-sortablejs';
 
 import {
+  updateListItemOrder,
   updateListTitle,
   deleteList,
   showActive,
@@ -60,78 +62,100 @@ const List = props => {
   progressPerc = (totalCompleted / items.length) * 100;
 
   return (
-    <>
-      <div className="column is-one-third List">
-        <div className="panel">
-          <p className="panel-heading">
-            <span
-              className="list-title"
-              contentEditable={true}
-              onBlur={e => updateTitle(id, e)}
-              onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  updateTitle(id, e);
-                  e.target.blur();
-                }
-              }}
-              suppressContentEditableWarning={true}
-              spellCheck={false}
-            >
-              {title}
-            </span>
-            <span className="action-btns">
-              <button
-                className="delete-list-btn"
-                onClick={() => setModalVisibility(true)}
-                title="Delete List"
-              >
-                <span className="icon">
-                  <i className="fas fa-times" />
-                </span>
-                {/* <span>Delete</span> */}
-              </button>
-            </span>
-          </p>
-          <div className="progressbar-wrapper">
-            <div
-              className="progressbar"
-              style={{
-                width: `${progressPerc}%`,
-                backgroundColor: `${
-                  progressPerc === 100 ? 'dodgerblue' : 'lightblue'
-                }`
-              }}
-            />
-          </div>
-          <p className="panel-tabs">
+    <div className="column is-one-third List" data-id={id}>
+      <div className="panel">
+        <p className="panel-heading">
+          <span className="handle-list">
+            <i className="fas fa-grip-vertical" />
+          </span>
+          <span
+            className="list-title"
+            contentEditable={true}
+            onBlur={e => updateTitle(id, e)}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                updateTitle(id, e);
+                e.target.blur();
+              }
+            }}
+            suppressContentEditableWarning={true}
+            spellCheck={false}
+          >
+            {title}
+          </span>
+          <span className="action-btns">
             <button
-              onClick={() => dispatch(showActive(id))}
-              className={visibility === 'active' ? 'is-active' : null}
+              className="delete-list-btn"
+              onClick={() => setModalVisibility(true)}
+              title="Delete List"
             >
-              Active
+              <span className="icon">
+                <i className="fas fa-times" />
+              </span>
+              {/* <span>Delete</span> */}
             </button>
-            <button
-              onClick={() => dispatch(showCompleted(id))}
-              className={visibility === 'completed' ? 'is-active' : null}
-            >
-              Completed
-            </button>
-            <button
-              onClick={() => dispatch(showAll(id))}
-              className={visibility === 'all' ? 'is-active' : null}
-            >
-              All
-            </button>
-          </p>
+          </span>
+        </p>
+        <div className="progressbar-wrapper">
+          <div
+            className="progressbar"
+            style={{
+              width: `${progressPerc}%`,
+              backgroundColor: `${
+                progressPerc === 100 ? 'dodgerblue' : 'lightblue'
+              }`
+            }}
+          />
+        </div>
+        <p className="panel-tabs">
+          <button
+            onClick={() => dispatch(showActive(id))}
+            className={visibility === 'active' ? 'is-active' : null}
+          >
+            Active
+          </button>
+          <button
+            onClick={() => dispatch(showCompleted(id))}
+            className={visibility === 'completed' ? 'is-active' : null}
+          >
+            Completed
+          </button>
+          <button
+            onClick={() => dispatch(showAll(id))}
+            className={visibility === 'all' ? 'is-active' : null}
+          >
+            All
+          </button>
+        </p>
+        <Sortable
+          options={{
+            handle: '.handle-list-item',
+            dragClass: 'list-item-drag',
+            ghostClass: 'list-item-ghost',
+            chosenClass: 'list-item-chosen',
+            animation: 150
+          }}
+          onChange={order => {
+            dispatch(
+              updateListItemOrder(
+                id,
+                [...items].sort(
+                  (a, b) => order.indexOf(a.id) - order.indexOf(b.id)
+                )
+              )
+            );
+          }}
+        >
           {filteredList.map(item => (
             <ListItem item={item} listId={id} key={item.id} />
           ))}
+        </Sortable>
 
-          {message}
+        {message}
 
-          <AddItem listId={id} />
-        </div>
+        <AddItem listId={id} />
       </div>
+
       <Modal
         visibility={modalVisibility}
         closeModal={() => setModalVisibility(false)}
@@ -141,7 +165,7 @@ const List = props => {
         buttonClass="is-danger"
         buttonAction={() => dispatch(deleteList(id))}
       />
-    </>
+    </div>
   );
 };
 

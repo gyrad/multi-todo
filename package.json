@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://tenzinggaychey.com/multi-todo",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "bulma": "^0.7.5",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",

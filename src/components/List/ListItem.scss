@@ -1,13 +1,20 @@
 .ListItem {
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* For due date to show up on next line */
+  align-items: baseline !important;
+  background-color: white;
+
+  .handle-list-item {
+    cursor: move;
+    color: #ccc;
+    padding-right: 0.6rem;
+    margin-left: -0.2rem;
+  }
 
   input[type='checkbox'] {
     background-color: green;
   }
 
   .action-btns {
-    margin-left: auto;
-
     button {
       outline: 0;
     }
@@ -65,9 +72,17 @@
 
   .editable-list-item {
     outline: none;
+    cursor: pointer;
+    flex: 1;
+    margin-right: 0.5rem;
+    &:focus {
+      background-color: rgba(255, 255, 0, 0.3);
+    }
   }
 
   .duedate {
+    border-top: 1px solid #eee;
+    margin-top: 0.6rem;
     flex-basis: 100%;
     font-size: 0.8rem;
     padding-top: 5px;
@@ -77,4 +92,21 @@
       color: #666;
     }
   }
+}
+
+.list-item-drag {
+  cursor: move;
+  .handle-list {
+    color: #444;
+  }
+}
+
+.list-item-ghost {
+  cursor: move;
+  background: rgba(90, 169, 214, 0.2);
+}
+
+.list-item-chosen {
+  cursor: move;
+  /* opacity: 1 !important; */
 }

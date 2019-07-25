@@ -1,4 +1,7 @@
 import {
+  UPDATE_LIST_ITEM_ORDER,
+  UPDATE_LIST_ORDER,
+  LOAD_SAVED_STATE,
   TOGGLE_COMPLETED,
   ADD_ITEM,
   DELETE_ITEM,
@@ -15,6 +18,23 @@ import {
 
 const listsReducer = (state = [], action) => {
   switch (action.type) {
+    case UPDATE_LIST_ITEM_ORDER: {
+      const { listId, newListItemOrder } = action.payload;
+      return [...state].map(list => {
+        if (list.id === listId) {
+          list.items = newListItemOrder;
+        }
+        return list;
+      });
+    }
+
+    case UPDATE_LIST_ORDER: {
+      return action.payload;
+    }
+
+    case LOAD_SAVED_STATE:
+      return action.payload;
+
     case TOGGLE_COMPLETED: {
       const { listId, itemId } = action.payload;
       return [...state].map(list => {

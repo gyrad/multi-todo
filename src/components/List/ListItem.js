@@ -103,7 +103,11 @@ const ListItem = props => {
     <div
       className={`ListItem panel-block ${item.completed ? 'is-active' : null}`}
       key={item.id}
+      data-id={item.id}
     >
+      <span className="handle-list-item">
+        <i className="fas fa-grip-vertical" />
+      </span>
       <input
         type="checkbox"
         defaultChecked={item.completed}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addList } from '../actions';
+import { addList, deleteAllLists } from '../actions';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Header = () => {
       content="Are you sure you want to delete all lists? This action is irreversible."
       buttonLabel="Delete All Lists"
       buttonClass="is-danger"
-      buttonAction={{ type: 'DELETE_ALL_LISTS' }}
+      buttonAction={() => dispatch(deleteAllLists())}
     />
   );
 

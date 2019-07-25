@@ -1,8 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import List from './List/List';
+import { updateListOrder } from '../actions';
+
+import Sortable from 'react-sortablejs';
 
 const AllLists = () => {
+  const dispatch = useDispatch();
   const lists = useSelector(state => state.lists);
 
   const renderEmptyTodoMessage = (
@@ -18,11 +22,31 @@ const AllLists = () => {
     <>
       <section className="section" style={{ paddingTop: '.5rem' }}>
         <div className="container">
-          <div className="columns is-multiline">
-            {lists.map(list => (
-              <List key={list.id} list={list} visibility={list.visibility} />
-            ))}
-          </div>
+          <Sortable
+            options={{
+              handle: '.handle-list',
+              dragClass: 'list-drag',
+              ghostClass: 'list-ghost',
+              chosenClass: 'list-chosen',
+              animation: 150
+            }}
+            className="columns is-multiline"
+            onChange={order => {
+              dispatch(
+                updateListOrder(
+                  [...lists].sort(
+                    (a, b) => order.indexOf(a.id) - order.indexOf(b.id)
+                  )
+                )
+              );
+            }}
+          >
+            {lists.map(list => {
+              return (
+                <List key={list.id} list={list} visibility={list.visibility} />
+              );
+            })}
+          </Sortable>
         </div>
       </section>
       {lists.length === 0 ? renderEmptyTodoMessage : null}
