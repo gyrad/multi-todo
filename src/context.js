@@ -1,3 +1,7 @@
+// This file isn't being used in the App since we
+// converted it to use Redux. Will still leave this
+// here just for future reference.
+
 import React, { Component } from 'react';
 import uuid from 'uuid';
 
