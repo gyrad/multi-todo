@@ -8,35 +8,83 @@
     color: #ccc;
     padding-right: 0.6rem;
     margin-left: -0.2rem;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 125%;
+      height: 150%;
+      top: -27%;
+      left: -36%;
+    }
   }
 
-  input[type='checkbox'] {
-    background-color: green;
-  }
+  /* input[type='checkbox'] {
+    transform: scale(1.2);
+  } */
 
   .action-btns {
-    button {
-      outline: 0;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    color: #999;
+
+    &:hover,
+    &:focus {
+      color: #333;
     }
 
-    .duedate-btn,
-    .delete-btn {
-      font-size: 1rem;
-      background-color: transparent;
-      border-width: 0;
-      cursor: pointer;
-      outline: 0;
-      color: #ccc;
-      transition: color 0.4s ease;
-      padding-left: 5px;
-      padding-right: 5px;
+    &::after {
+      /* this rule to increase clickable/hoverable area */
+      content: '';
+      position: absolute;
+      width: 500%;
+      height: 150%;
+      top: -27%;
+      left: -200%;
+      /* background: rgba(200, 0, 0, 0.3); */
     }
 
-    .duedate-btn {
-      &:hover,
-      &:focus {
-        color: #888;
+    ul {
+      position: absolute;
+      top: 32px;
+      right: -19px;
+      visibility: hidden;
+      opacity: 0;
+      list-style: none;
+      display: inline-block;
+      background-color: white;
+      z-index: 9999;
+      width: 200px;
+      box-shadow: 0px 0px 18px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      padding: 7px 0;
+      transition: opacity 0.4s, visibility 0.4s;
+
+      &::after {
+        content: '';
+        border-top: 0;
+        border-right: 0.5rem solid transparent;
+        border-bottom: 0.5rem solid white;
+        border-left: 0.5rem solid transparent;
+        position: absolute;
+        top: -0.5rem;
+        right: 14px;
       }
+
+      li {
+        padding: 0.5rem 1rem;
+        display: block;
+        cursor: pointer;
+        &:hover {
+          background: #eee;
+        }
+      }
+    }
+
+    &:hover > ul {
+      visibility: visible;
+      opacity: 1;
     }
 
     .duedate-popup {
@@ -53,19 +101,6 @@
 
       .clear-btn {
         width: 100%;
-      }
-    }
-
-    .delete-btn {
-      font-size: 1rem;
-      background-color: transparent;
-      border-width: 0;
-      cursor: pointer;
-      outline: 0;
-      color: #ccc;
-      transition: color 0.4s ease;
-      &:hover {
-        color: tomato;
       }
     }
   }
@@ -109,4 +144,8 @@
 .list-item-chosen {
   cursor: move;
   /* opacity: 1 !important; */
+}
+
+.react-datepicker__input-container {
+  display: block;
 }

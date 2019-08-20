@@ -101,7 +101,7 @@ const ListItem = props => {
 
   return (
     <div
-      className={`ListItem panel-block ${item.completed ? 'is-active' : null}`}
+      className={`ListItem panel-block ${item.completed ? 'is-active' : ''}`}
       key={item.id}
       data-id={item.id}
     >
@@ -129,42 +129,44 @@ const ListItem = props => {
       >
         {item.todoItem}
       </span>
-      <div className="action-btns">
-        <DatePicker
-          customInput={<DueDateButton />}
-          onChange={dueDate => onDueDateSelect(listId, item.id, dueDate)}
-          popperClassName="duedate-popup"
-          popperPlacement="top-end"
-          popperModifiers={{
-            offset: {
-              enabled: true,
-              offset: '20px, 0px'
-            }
-          }}
-          shouldCloseOnSelect={true}
-          ref={datepicker}
-          minDate={new Date()}
-        >
-          <div style={{ clear: 'both', padding: 5 }}>
-            <button
-              className="button is-info clear-btn"
-              onClick={() => {
-                onDueDateSelect(listId, item.id, null);
-                datepicker.current.setOpen(false);
-              }}
-            >
-              Clear
-            </button>
-          </div>
-        </DatePicker>
+      <div className="action-btns" tabIndex="0">
+        <i className="fas fa-ellipsis-v" />
+        <ul>
+          <DatePicker
+            customInput={<DueDateButton />}
+            onChange={dueDate => onDueDateSelect(listId, item.id, dueDate)}
+            withPortal
+            popperModifiers={{
+              offset: {
+                enabled: true,
+                offset: '20px, 0px'
+              }
+            }}
+            shouldCloseOnSelect={true}
+            ref={datepicker}
+            minDate={new Date()}
+          >
+            <div style={{ clear: 'both', padding: 5 }}>
+              <button
+                className="button is-info clear-btn"
+                onClick={() => {
+                  onDueDateSelect(listId, item.id, null);
+                  datepicker.current.setOpen(false);
+                }}
+              >
+                Clear
+              </button>
+            </div>
+          </DatePicker>
 
-        <button
-          className="delete-btn"
-          title="Delete Item"
-          onClick={() => dispatch(deleteItem(listId, item.id))}
-        >
-          <i className="fas fa-minus-circle" />
-        </button>
+          <li
+            className="delete-btn"
+            title="Delete Item"
+            onClick={() => dispatch(deleteItem(listId, item.id))}
+          >
+            <i className="fas fa-trash" /> &nbsp; Delete Item
+          </li>
+        </ul>
       </div>
 
       {item.dueDate ? renderDueDate : null}

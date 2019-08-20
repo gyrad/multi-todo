@@ -51,6 +51,16 @@
       &:hover {
         color: #aaa;
       } */
+
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        width: 125%;
+        height: 160%;
+        top: -27%;
+        left: -40%;
+      }
     }
 
     .action-btns {
